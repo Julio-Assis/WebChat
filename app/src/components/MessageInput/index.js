@@ -15,8 +15,8 @@ const MessageInput = (props) => {
 };
 
 MessageInput.propTypes = {
-  onSend: PropTypes.func,
-  enterButton: PropTypes.string
+  onSend: PropTypes.func.isRequired,
+  enterButton: PropTypes.string.isRequired
 };
 
 export default MessageInput;
