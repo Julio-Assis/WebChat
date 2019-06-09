@@ -1,10 +1,7 @@
-import { ActionCreator } from 'redux';
-import {  } from 'react-redux';
-
-const IncomingMessageTypes = {
-  RECEIVE_MESSAGE = '@@incomingMessageModule/RECEIVE_MESSAGE',
-  RECEIVE_MESSAGE_SUCCESS = '@@incomingMessageModule/RECEIVE_MESSAGE_SUCCESS',
-  RECEIVE_MESSAGE_ERROR = '@@incomingMessageModule/RECEIVE_MESSAGE_ERROR'
+export const IncomingMessageTypes = {
+  RECEIVE_MESSAGE: '@@incomingMessageModule/RECEIVE_MESSAGE',
+  RECEIVE_MESSAGE_SUCCESS: '@@incomingMessageModule/RECEIVE_MESSAGE_SUCCESS',
+  RECEIVE_MESSAGE_ERROR: '@@incomingMessageModule/RECEIVE_MESSAGE_ERROR'
 }
 
 export const receiveMessage = (message) => ({
@@ -16,7 +13,9 @@ export const receiveMessage = (message) => ({
 
 export const receiveMessageSuccess = (message) => ({
   type: IncomingMessageTypes.RECEIVE_MESSAGE_SUCCESS,
-  payload: null
+  payload: {
+    message
+  }
 });
 
 export const receiveMessageError = (error) => ({
@@ -27,7 +26,10 @@ export const receiveMessageError = (error) => ({
 });
 
 const initialState = {
-  lastMessage: ''
+  isReceivingMessages: false,
+  lastMessage: {},
+  error: '',
+
 };
 
 export const incomingMessageReducer = (state = initialState, action) => {
@@ -40,7 +42,7 @@ export const incomingMessageReducer = (state = initialState, action) => {
       return 0;
     case IncomingMessageTypes.RECEIVE_MESSAGE_ERROR:
       return 0;
+    default:
+      return state;
   }
 }
-
-Object.assign

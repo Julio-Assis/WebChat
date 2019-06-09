@@ -18,8 +18,8 @@ router.use(express.static(
   { maxAge: '30d' }
 ));
 
-app.get("/", (req, res) => {
-  res.send("connecting things blah");
+app.get('/', (req, res) => {
+  res.send('connecting things blah');
 });
 
 // tell the app to use the above rules
