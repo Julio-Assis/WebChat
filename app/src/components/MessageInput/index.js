@@ -1,47 +1,35 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input } from 'antd';
 
 const Search = Input.Search;
 
-class MessageInput extends Component {
+const MessageInput = (props) => {
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      inputContent: ''
-    };
+  const [inputContent, setInputContent] = useState('');
+
+  const updateInputContent = (e) => {
+    setInputContent(e.target.value);
   }
 
-  updateInputContent = (e) => {
-    this.setState({
-      inputContent: e.target.value
-    });
-  }
-
-  sendAndClearInput = (value) => {
+  const sendAndClearInput = (value) => {
     const newMessage = {
-      title: "User Blah",
       message: value,
     };
 
-    this.props.onSend(newMessage);
-    this.setState({
-      inputContent: ''
-    });
+    props.onSend(newMessage);
+    setInputContent('');
   }
-
-  render() {
-    return (
-      <Search
-        placeholder='Type in your message'
-        onSearch={value => this.sendAndClearInput(value)}
-        enterButton={this.props.enterButton}
-        onChange={this.updateInputContent}
-        value={this.state.inputContent}
-      />
-    )
-  }
+  
+  return (
+    <Search
+      placeholder='Type in your message'
+      onSearch={value => sendAndClearInput(value)}
+      enterButton={props.enterButton}
+      onChange={updateInputContent}
+      value={inputContent}
+    />
+  )
 }
 
 MessageInput.propTypes = {

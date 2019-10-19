@@ -6,6 +6,7 @@ import {
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ChatWindow from './containers/ChatWindow';
+import Users from './containers/Users';
 import { Layout, Menu } from 'antd';
 import './App.css';
 import 'antd/dist/antd.css';
@@ -18,10 +19,6 @@ const Index = () => {
 
 const About = () => {
   return <h2>About blahblah</h2>;
-}
-
-const Users = () => {
-  return <h2>Users</h2>;
 }
 
 class App extends Component {

@@ -1,44 +1,49 @@
-import React, { Component } from 'react';
+import React from 'react';
 import MessageInput from '../../components/MessageInput';
 import MessageDisplay from '../../components/MessageDisplay';
 import { connect } from 'react-redux';
-import { IncomingMessageTypes } from '../../redux/modules/incomingMessageModule';
+import { receiveMessage } from '../../redux/modules/incomingMessageModule';
+import PropTypes from 'prop-types';
 
-class ChatWindow extends Component {
+const ChatWindow = (props) => {
 
-  sendMessage = (message) => {
-    this.props.sendMessage(message);
+  const sendMessage = (message) => {
+    
+    props.sendMessage({
+      ...message,
+      userName: props.userName,
+    });
   }
 
-  render() {
-    return (
-      <div>
-        <MessageDisplay />
-        <MessageInput enterButton={"Send"} onSend={this.sendMessage} />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <MessageDisplay />
+      <MessageInput enterButton={"Send"} onSend={sendMessage} />
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    userName: state.user.userName,
+  }
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    sendMessage: (message) => dispatch({
-      type: IncomingMessageTypes.RECEIVE_MESSAGE,
-      payload: {
-        message
-      }
-    })
+    sendMessage: (message) => dispatch(receiveMessage(message))
   }
 }
 
-ChatWindow = connect(
+ChatWindow.propTypes = {
+  userName: PropTypes.string,
+  sendMessage: PropTypes.func,
+}
+
+const ConnectedChatWindow = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ChatWindow);
 
 
-export default ChatWindow;
+export default ConnectedChatWindow;
