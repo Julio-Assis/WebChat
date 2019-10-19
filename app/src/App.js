@@ -39,7 +39,7 @@ class App extends Component {
             <Menu.Item key='4'><Link to='/chatWindow/'> ChatWindow </Link></Menu.Item>
           </Menu>
         </Header>
-        <Content style={{padding: "5px"}}>
+        <Content style={{padding: "5px", height: "100%"}}>
           <Route path='/' exact component={Index} />
           <Route path='/about/' component={About} />
           <Route path='/users/' component={Users} />
