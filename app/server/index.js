@@ -37,20 +37,15 @@ wss.on('connection', (ws) => {
 
     const broadcastRegex = /^broadcast\:/;
 
-    if (broadcastRegex.test(message)) {
-      message = message.replace(broadcastRegex, '');
+    message = message.replace(broadcastRegex, '');
 
       //send back the message to the other clients
       wss.clients
         .forEach(client => {
           if (client != ws) {
-            client.send(`Hello, broadcast message -> ${message}`);
+            client.send(`${message}`);
           }
-        });
-
-    } else {
-      ws.send(`Hello, you sent -> ${message}`);
-    }
+      });
   });
 
   //send immediatly a feedback to the incoming connection    

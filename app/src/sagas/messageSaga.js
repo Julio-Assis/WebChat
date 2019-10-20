@@ -1,13 +1,22 @@
-import {} from 'redux-saga';
+import { put, call, delay } from 'redux-saga/effects';
+import {
+  receiveMessage,
+  receiveMessageSuccess,
+} from '../redux/modules/incomingMessageModule';
 
 const webssocket = new WebSocket('ws://localhost:3001');
-
+const messages = [];
 webssocket.onopen = function (event) {
   console.log('hey jo! Socket connection started');
 };
 
-webssocket.onmessage = function(event) {
+webssocket.onmessage = function (event) {
   console.log(`Hey bro! Just received a message here ${event.data}`);
+  try {
+    messages.push(JSON.parse(event.data));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 webssocket.onclose = function(event) {
@@ -28,5 +37,15 @@ export function* messageSaga(action) {
   if (action.payload && action.payload.message) {
     const { message } = action.payload;
     webssocket.send(JSON.stringify(message))
+  }
+}
+
+export function* receiveMessageSuccessSaga() {
+
+  while (true) {
+    yield delay(300);
+    if (messages.length > 0) {
+      yield put(receiveMessageSuccess(messages.pop()));
+    }
   }
 }

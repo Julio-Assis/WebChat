@@ -39,7 +39,9 @@ export const incomingMessageReducer = (state = initialState, action) => {
         lastMessage: action.payload.message
       });
     case IncomingMessageTypes.RECEIVE_MESSAGE_SUCCESS:
-      return 0;
+      return Object.assign({}, state, {
+        lastMessage: action.payload.message
+      });
     case IncomingMessageTypes.RECEIVE_MESSAGE_ERROR:
       return 0;
     default:
